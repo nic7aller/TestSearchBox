@@ -14,16 +14,65 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script src="/Scripts/angular.min.js"></script>
         <script src="controller.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6LJSD7jWZ78HxqWislLXAzncjSS2R-zM&libraries=places"></script>
+        <style>
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                padding: 0 11px 0 13px;
+                text-overflow: ellipsis;
+                width: 300px;
+              }
+
+            #pac-input:focus {
+                border-color: #4d90fe;
+              }
+
+            .pac-container {
+                font-family: Roboto;
+              }
+
+              #type-selector {
+                color: #fff;
+                background-color: #4d90fe;
+                padding: 5px 11px 0px 11px;
+              }
+
+              #type-selector label {
+                font-family: Roboto;
+                font-size: 13px;
+                font-weight: 300;
+              }
+        </style>
         <title>TestSearchBox</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+        <script>
+            function initAutocomplete() {
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+
+                searchBox.addListener('places_changed', function() {
+                    var places = searchBox.getPlaces();
+
+                    if (places.length == 0) {
+                        return;
+                    }
+
+                    places.forEach(function(place) {
+                        if (!place.geometry) {
+                            console.log("Returned place contains no geometry");
+                            return;
+                        }
+                    });
+                });
+            }
+        </script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>
         <script type="text/javascript" src="scripts/index.js"></script>
