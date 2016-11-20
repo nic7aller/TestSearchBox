@@ -23,10 +23,15 @@
                     lng: place.geometry.location.lng()
                 };
                 place.distance = getDistance($scope.currentLocation, ltlg);
+                place.index = index;
                 index++;
             });
             $scope.$apply();
-            console.log($scope.locations[0].distance);
+            console.log($scope.locations);
+        }
+
+        $scope.getItem = function (index) {
+            alert($scope.locations[index].name);
         }
 
         // Adapted functions from Mike Williams and Mathias Bynens on Stack Overflow
